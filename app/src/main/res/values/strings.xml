@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Instagram</string>
+
+    <string name="ok">OK</string>
+    <!-- UserFragment -->
+    <string name="user_name">User name</string>
+    <!-- UserFragment -->
+
+    <!-- UserDetailFragment -->
+    <string name="lorem_ipsum">Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page, le texte définitif venant remplacer le faux-texte dès qu\'il est prêt ou que la mise en page est achevée. Généralement, on utilise un texte en faux latin, le Lorem ipsum ou Lipsum.</string>
+    <string name="updated_at">Updated at :</string>
+    <string name="created_at">Created at :</string>
+    <string name="hint"><font size="10">Long description!</font></string>
+    <!-- UserDetailFragment -->
+</resources>
