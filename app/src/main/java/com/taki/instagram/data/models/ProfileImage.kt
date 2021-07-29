@@ -1,9 +1,11 @@
 package com.taki.instagram.data.models
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 data class ProfileImage(
     @SerializedName("small")
     val small: String,
@@ -11,4 +13,4 @@ data class ProfileImage(
     val medium: String,
     @SerializedName("large")
     val large: String
-)
+) : Parcelable

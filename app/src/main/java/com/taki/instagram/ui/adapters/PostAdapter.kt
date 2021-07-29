@@ -40,7 +40,7 @@ open class PostAdapter(
             Glide.with(it)
                 .load(currentItem.profileImage?.medium)
                 .placeholder(R.drawable.placeholder)
-                .error(R.drawable.ic_android)
+                .error(R.drawable.ic_close)
                 .into(holder.image)
         }
 
@@ -62,7 +62,7 @@ open class PostAdapter(
             } else {
                 val filterPattern = constraint.toString().toLowerCase().trim()
                 for (post in userListFull) {
-                    if (post.username.toLowerCase().contains(filterPattern)) {
+                    if (post.username!!.toLowerCase().contains(filterPattern)) {
                         filteredList.add(post)
                     }
                 }

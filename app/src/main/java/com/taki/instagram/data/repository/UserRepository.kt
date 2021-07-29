@@ -1,8 +1,8 @@
 package com.taki.instagram.data.repository
 
-import UserApi
 import androidx.room.withTransaction
 import com.taki.instagram.data.cache.UserDatabase
+import com.taki.instagram.data.network.UserApi
 import com.taki.instagram.utils.networkBoundResource
 import kotlinx.coroutines.delay
 import javax.inject.Inject
@@ -27,7 +27,7 @@ class UserRepository @Inject constructor(
         saveFetchResult = { users ->
             db.withTransaction {
                 userDao.deleteAllUsers()
-                //userDao.insertUsers(users)
+                userDao.insertUsers(users)
             }
         }
     )

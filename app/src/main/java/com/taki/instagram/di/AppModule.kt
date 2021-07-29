@@ -1,9 +1,9 @@
 package com.taki.instagram.di
 
-import UserApi
 import android.app.Application
 import androidx.room.Room
 import com.taki.instagram.data.cache.UserDatabase
+import com.taki.instagram.data.network.UserApi
 import com.taki.instagram.data.network.RemoteDataSource
 
 import dagger.Module
@@ -24,23 +24,10 @@ object AppModule {
         return remoteDataSource.buildApi(UserApi::class.java)
     }
 
-/*    @Singleton
-    @Provides
-    fun provideRetrofit(): Retrofit =
-        Retrofit.Builder()
-            .baseUrl("https://api.unsplash.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-    @Singleton
-    @Provides
-    fun provideUserApi(retrofit: Retrofit): UserApi =
-        retrofit.create(UserApi::class.java)*/
-
     @Provides
     @Singleton
     fun provideDatabase(app: Application) : UserDatabase =
-        Room.databaseBuilder(app, UserDatabase::class.java, "user_database")
+        Room.databaseBuilder(app, UserDatabase::class.java, "photo_database")
             .build()
 
 }

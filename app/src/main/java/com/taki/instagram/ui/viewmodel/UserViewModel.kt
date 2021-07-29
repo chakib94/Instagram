@@ -6,6 +6,14 @@ import com.taki.instagram.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+/*for viewmodels we need to inject the dependencies into the constructor and for that we will need a viewmodel factory
+its a special class that we need to declare and we dont want to do that with old dagger
+With Hilt it actually make that for us*/
+
+/*the reason that we have @inject in constructor in viewmodel and not in activities/fragments its because the android system is
+responsible for instantiating activities whenever call an activity constructor also we cant pass any argument to it*/
+
+//Thanks to @HiltViewModel annotation dagger hilt will write this viewmodel factory behind the scenes for us
 @HiltViewModel
 class UserViewModel @Inject constructor(
     repository: UserRepository

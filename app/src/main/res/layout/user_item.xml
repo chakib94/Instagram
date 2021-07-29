@@ -16,7 +16,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/placeholder"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
-        app:strokeColor="@color/orange_red"
+        app:strokeColor="@color/Christi"
         app:strokeWidth="3dp" />
 
     <TextView

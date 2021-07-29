@@ -30,21 +30,20 @@
         android:name="com.taki.instagram.ui.fragments.UserDetailFragment"
         android:label="fragment_user_detail"
         tools:layout="@layout/fragment_user_detail" >
- <!--       <argument
-            android:name="user"
-            app:argType="com.taki.instagram.models.User" />-->
+
+        <argument
+            android:name="User"
+            app:argType="com.taki.instagram.data.models.User" />
     </fragment>
     <fragment
         android:id="@+id/detailFullScreenFragment"
         android:name="com.taki.instagram.ui.fragments.DetailFullScreenFragment"
         android:label="fragment_detail_full_screen"
         tools:layout="@layout/fragment_detail_full_screen" >
-        <action
-            android:id="@+id/action_detailFullScreenFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
- <!--       <argument
-            android:name="user"
-            app:argType="com.taki.instagram.models.User" />-->
+
+        <argument
+            android:name="url"
+            app:argType="string" />
     </fragment>
 
 

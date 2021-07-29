@@ -1,6 +1,5 @@
 package com.taki.instagram.data.network
 
-import androidx.viewbinding.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -34,7 +33,7 @@ class RemoteDataSource @Inject constructor() {
                     //it.addHeader("Accept-version: v1", "Authorization: Client-ID $Client_ID")
                 }.build())
             }.also { client ->
-                if (BuildConfig.DEBUG) {
+                if (com.taki.instagram.BuildConfig.DEBUG) {
                     val logging = HttpLoggingInterceptor()
                     logging.setLevel(HttpLoggingInterceptor.Level.BODY)
                     client.addInterceptor(logging)

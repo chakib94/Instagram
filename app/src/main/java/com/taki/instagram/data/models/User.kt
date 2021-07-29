@@ -1,66 +1,25 @@
 package com.taki.instagram.data.models
 
-
 import android.os.Parcelable
+import androidx.annotation.NonNull
 import androidx.room.Embedded
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import com.taki.instagram.data.models.ProfileImage
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-@Entity(tableName = "user")
 data class User(
-    @SerializedName("id")
-    @PrimaryKey val id: String,
-
+    @NonNull
     @SerializedName("updated_at")
-    val updatedAt: String,
-
+    val updatedAt: String? = null,
     @SerializedName("username")
-    val username: String,
-
+    val username: String? = null,
     @SerializedName("name")
-    val name: String,
-
+    val name: String? = null,
     @SerializedName("first_name")
-    val firstName: String,
-
+    val firstName: String? = null,
     @SerializedName("last_name")
-    val lastName: String,
-
-    @SerializedName("twitter_username")
-    val twitterUsername: String,
-
-    @SerializedName("portfolio_url")
-    val portfolioUrl: String,
-
-    @SerializedName("bio")
-    val bio: String,
-
-    @SerializedName("location")
-    val location: String,
-
+    val lastName: String? = null,
     @SerializedName("profile_image")
     @Embedded
     val profileImage: ProfileImage? = null,
-    @SerializedName("instagram_username")
-    val instagramUsername: String,
-
-    @SerializedName("total_collections")
-    val totalCollections: Int,
-
-    @SerializedName("total_likes")
-    val totalLikes: Int,
-
-    @SerializedName("total_photos")
-    val totalPhotos: Int,
-
-    @SerializedName("accepted_tos")
-    val acceptedTos: Boolean,
-
-    @SerializedName("for_hire")
-    val forHire: Boolean,
-
-    ) : Parcelable
+) : Parcelable
