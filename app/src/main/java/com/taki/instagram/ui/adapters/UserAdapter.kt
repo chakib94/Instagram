@@ -3,6 +3,7 @@ package com.taki.instagram.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -57,13 +58,11 @@ class UserAdapter(private val listener: OnUserClickListener) :
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
                         val task = getItem(position)
-                        listener.onUserClick(task)
+                        //listener.onUserClick(task)
+                        val image = getItem(position).profileImage!!.large
+                        val action = HomeFragmentDirections.actionHomeFragmentToDetailFullScreenFragment(image)
+                        Navigation.findNavController(it).navigate(action)
                     }
-
-                /*    val action = HomeFragmentDirections.actionHomeFragmentToDetailFullScreenFragment(getItem(position))
-                    action.note = getItem(position)
-                    Navigation.findNavController(it).navigate(action)*/
-
                 }
 
             }

@@ -1,7 +1,6 @@
 package com.taki.instagram.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
@@ -11,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.taki.instagram.R
-import com.taki.instagram.data.models.Photo
 import com.taki.instagram.data.models.User
 import com.taki.instagram.databinding.FragmentHomeBinding
 import com.taki.instagram.ui.adapters.PostAdapter
@@ -23,8 +21,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 
 //@AndroidEntryPoint   //I can inject things into this class //we need to inject dependencies into the activities/fragments
-//if we want to inject dependencies into android component such activities frgments views so that we need @AndroidEntryPoint
-//@AndroidEntryPoint   tells dagger Hilt to inject this activity/fragment with its dpendencies
+//if we want to inject dependencies into android component such activities fragments views so that we need @AndroidEntryPoint
 
 // inject the field of its class exp when we create a viewmodel this annotation @AndroidEntryPoint  will take care of the viewmodel
 @AndroidEntryPoint
@@ -97,15 +94,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), UserAdapter.OnUserClickLi
 
     override fun onUserClick(user: User) {
 /*        val image = user.profileImage!!.large
-        val bundle = Bundle()
-         bundle.putString("url", "image")
         val action = HomeFragmentDirections.actionHomeFragmentToDetailFullScreenFragment(image)
         findNavController().navigate(action)*/
     }
 
     override fun onPostClick(user: User) {
-/*        val action = HomeFragmentDirections.actionHomeFragmentToUserDetailFragment(user)
-        findNavController().navigate(action)*/
+        val action = HomeFragmentDirections.actionHomeFragmentToUserDetailFragment(user)
+        findNavController().navigate(action)
     }
 
 }

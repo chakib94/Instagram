@@ -8,31 +8,31 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.taki.instagram.ui.fragments.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_userDetailFragment"
             app:destination="@id/userDetailFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_right"
+            app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_left" />
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_homeFragment_to_detailFullScreenFragment"
             app:destination="@id/detailFullScreenFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_right"
+            app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_left" />
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/userDetailFragment"
         android:name="com.taki.instagram.ui.fragments.UserDetailFragment"
-        android:label="fragment_user_detail"
-        tools:layout="@layout/fragment_user_detail" >
-
+        android:label="user detail"
+        tools:layout="@layout/fragment_user_detail">
         <argument
-            android:name="User"
+            android:name="user"
             app:argType="com.taki.instagram.data.models.User" />
     </fragment>
     <fragment

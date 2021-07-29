@@ -1,143 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    tools:context=".ui.fragments.UserDetailFragment">
+<layout>
 
-    <ImageView
-        android:id="@+id/back"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/ic_back"
-        android:backgroundTint="@color/black"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="UsingOnClickInXml" />
-
-
-    <ImageView
-        android:id="@+id/imageView"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@drawable/placeholder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back" />
+        android:layout_height="match_parent"
+        tools:context=".ui.fragments.UserDetailFragment">
+
+     <!--   <data>
+
+            <variable
+                name="user"
+                type="com.taki.instagram.data.models.User" />
+        </data>-->
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/couverture_img"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/img"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_margin="10dp"
-        android:adjustViewBounds="true"
-        android:padding="5dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/placeholder"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
-        app:strokeColor="@color/Christi"
-        app:strokeWidth="3dp" />
-
-
-    <TextView
-        android:id="@+id/desc_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:lineSpacingExtra="3dp"
-        android:text="@string/lorem_ipsum"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/desc_ed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:autofillHints="Long description"
-        android:background="@drawable/black_rounded_border_bg"
-        android:gravity="start|left"
-        android:hint="@string/hint"
-        android:inputType="textMultiLine"
-        android:lines="8"
-        android:maxLines="10"
-        android:minLines="6"
-        android:padding="10dp"
-        android:scrollbars="vertical"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@+id/desc_tv" />
-
-    <RelativeLayout
-        android:id="@+id/created_at_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/desc_ed">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_marginVertical="10dp"
+            android:layout_marginLeft="5dp"
+            android:adjustViewBounds="true"
+            android:padding="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/placeholder"
+            app:layout_constraintBottom_toBottomOf="@+id/image_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+            app:strokeColor="@color/white"
+            app:strokeWidth="3dp" />
 
 
         <TextView
-            android:id="@+id/created_at_tv"
-            android:layout_width="wrap_content"
+            android:id="@+id/desc_tv"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/dateTV"
-            android:fontFamily="@font/roboto_black"
-            android:text="@string/created_at"
+            android:layout_margin="20dp"
+            android:lineSpacingExtra="3dp"
+            android:text="@string/lorem_ipsum"
             android:textColor="@color/black"
-            android:textSize="14sp" />
+            app:layout_constraintTop_toBottomOf="@+id/image_view" />
 
-        <TextView
-            android:id="@+id/dateTV"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/desc_ed"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/created_at_tv"
-            android:text="01/03/2000"
-            android:textSize="14sp" />
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/update_date_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/created_at_container">
-
-
-        <TextView
-            android:id="@+id/updateDateTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/updatedDateTV"
-            android:fontFamily="@font/roboto_black"
-            android:text="@string/updated_at"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/updatedDateTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/updateDateTV"
-            android:text="01/03/2000"
+            android:layout_margin="20dp"
+            android:autofillHints="Long description"
+            android:background="@drawable/black_rounded_border_bg"
+            android:gravity="start|left"
+            android:hint="@string/hint"
+            android:inputType="textMultiLine"
+            android:lines="8"
+            android:maxLines="10"
+            android:minLines="6"
+            android:padding="10dp"
+            android:scrollbars="vertical"
             android:textSize="14sp"
-            android:layout_toEndOf="@+id/updateDateTV" />
+            app:layout_constraintTop_toBottomOf="@+id/desc_tv" />
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/ic_back"
+            android:backgroundTint="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="UsingOnClickInXml" />
+
+        <RelativeLayout
+            android:id="@+id/created_at_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/desc_ed">
 
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/created_at_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/dateTV"
+                android:fontFamily="@font/roboto_black"
+                android:text="@string/created_at"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/date_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/created_at_tv"
+                android:text="01/03/2000"
+                android:textSize="14sp" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/update_date_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/created_at_container">
+
+
+            <TextView
+                android:id="@+id/updateDate_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/updatedDate_tv"
+                android:fontFamily="@font/roboto_black"
+                android:text="@string/updated_at"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/updatedDate_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@+id/updateDate_tv"
+                android:layout_toRightOf="@+id/updateDate_tv"
+                android:text="01/03/2000"
+                android:textSize="14sp" />
+
+
+        </RelativeLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

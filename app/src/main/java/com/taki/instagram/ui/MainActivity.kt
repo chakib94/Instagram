@@ -6,6 +6,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.taki.instagram.R
 import dagger.hilt.android.AndroidEntryPoint
 
+//@AndroidEntryPoint   tells dagger Hilt to inject this activity/fragment with its dependencies
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 

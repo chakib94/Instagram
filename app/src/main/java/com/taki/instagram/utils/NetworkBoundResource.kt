@@ -2,6 +2,20 @@ package com.taki.instagram.utils
 
 import kotlinx.coroutines.flow.*
 
+/* we want to implement the offline cache; we will something we call NetworkBoundResource for that
+its a class or function  depending the implementation and its basically coordinates this hole caching process it display the cachedata from db
+than it decides if its the time to update the cache if yes than it fetch data from rest api and save it into the sqllite db
+and if not will display the cache later*/
+
+/*NetworkBoundResource:  the way it works => we have to pass function arguments to this NetworkBoundResource
+function, these  function arguments have different responsibilities one function will be responsible for loading data
+from rest api db anther fun will decide if this data from db is stay and has to update or not then will have another fun
+which only responsible for loading this new data from the rest api and lastly another fun that takes the data from rest api
+and save it into the sql db*/
+
+/*the NetworkBoundResource  fun will coordinates the work between these different functions it will actually call them at the correct
+time and in this way we keep our fun reusable because we can later pass different function arguments to it depending
+what data we are working with or what caching logic we want to implement*/
 inline fun <ResultType, RequestType> networkBoundResource(
     crossinline query: () -> Flow<ResultType>,
     crossinline fetch: suspend () -> RequestType,

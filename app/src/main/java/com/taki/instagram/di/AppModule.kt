@@ -24,6 +24,8 @@ object AppModule {
         return remoteDataSource.buildApi(UserApi::class.java)
     }
 
+    /*Room its alibrary for architeture component that makes it easier to use sqlite Databases in our android apps
+        gives us compile life safety because it will through a compile time error when the queries are not valid*/
     @Provides
     @Singleton
     fun provideDatabase(app: Application) : UserDatabase =
