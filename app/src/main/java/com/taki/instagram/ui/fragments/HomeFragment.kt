@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.taki.instagram.R
+import com.taki.instagram.data.models.Photo
 import com.taki.instagram.data.models.User
 import com.taki.instagram.databinding.FragmentHomeBinding
 import com.taki.instagram.ui.adapters.PostAdapter
@@ -25,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 // inject the field of its class exp when we create a viewmodel this annotation @AndroidEntryPoint  will take care of the viewmodel
 @AndroidEntryPoint
-class HomeFragment : Fragment(R.layout.fragment_home), UserAdapter.OnUserClickListener,
+class HomeFragment : Fragment(R.layout.fragment_home),
     PostAdapter.OnPostClickListener {
 
 /*    if we want to inject viewModel in our activity for that we dont use inject because of all that viewModel factory stuff
@@ -33,6 +34,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), UserAdapter.OnUserClickLi
     this by viewModels() will make dagger hilt inject the ViewModel*/
     private val viewModel: UserViewModel by viewModels()
     private var homeFragmentBinding: FragmentHomeBinding? = null
+    var userList: MutableList<User> = mutableListOf()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,13 +43,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), UserAdapter.OnUserClickLi
         val binding = FragmentHomeBinding.bind(view)
         homeFragmentBinding = binding
 
-        val userAdapter = UserAdapter(this@HomeFragment)
-        val userList: MutableList<User> = mutableListOf()
+        val userAdapter = UserAdapter()
 
         binding.apply {
             usersRv.apply {
                 adapter = userAdapter
+                //layoutManager responsible for how the rv should actually layouts the items on the screen (horizontally or vertically)
                 layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                //optimization method of the rv wr should use if we know that the rv doesn't change it dimensions on the screen
                 setHasFixedSize(true)
             }
 
@@ -55,10 +59,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), UserAdapter.OnUserClickLi
                     result.data!!.forEach {
                         userList.add(it.user)
                     }
-
                     initPostsRV(userList)
-                    userAdapter.submitList(userList.toList())
 
+                    //whenever in the db changes we receive it in here
+                    //submitList method of ListAdapter and after we have passed the new list here DiffUtil takes care of the rest of calculating the changes
+                    //of the old list and dispatching the appropriate update events and animations
+                    //compare the old and new list
+                    userAdapter.submitList(userList.toList())
                 }
 
                 //result.data.isNullOrEmpty() when we dont cache data yet
@@ -66,7 +73,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), UserAdapter.OnUserClickLi
                 errorTv.isVisible = result is Resource.Error && result.data.isNullOrEmpty()
                 errorTv.text = result.error?.localizedMessage
             }
-
         }
     }
 
@@ -77,7 +83,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), UserAdapter.OnUserClickLi
         posts_rv.setHasFixedSize(true)
 
 
-        search_bar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        homeFragmentBinding!!.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 if ("" != query) {
                     search_bar.post { search_bar.clearFocus() }
@@ -92,15 +98,17 @@ class HomeFragment : Fragment(R.layout.fragment_home), UserAdapter.OnUserClickLi
         })
     }
 
-    override fun onUserClick(user: User) {
-/*        val image = user.profileImage!!.large
-        val action = HomeFragmentDirections.actionHomeFragmentToDetailFullScreenFragment(image)
-        findNavController().navigate(action)*/
-    }
-
     override fun onPostClick(user: User) {
+  /*      userList.remove(user)
+        posts_rv.adapter?.notifyItemRemoved(1)*/
         val action = HomeFragmentDirections.actionHomeFragmentToUserDetailFragment(user)
         findNavController().navigate(action)
     }
 
+    override fun onDestroyView() {
+        // Consider not storing the binding instance in a field
+        // if not needed.
+        homeFragmentBinding = null
+        super.onDestroyView()
+    }
 }

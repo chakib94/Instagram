@@ -14,10 +14,6 @@ fun View.hide() {
     this.visibility = View.GONE
 }
 
-/*fun SimpleDrawerView.loadImage(url: String) {
-    this.setImageURI(Uri.parse(url))
-}*/
-
 fun Activity.snackbar(msg: String, action: (() -> Unit)? = null) {
     Snackbar.make(
         findViewById(android.R.id.content),

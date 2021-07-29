@@ -1,6 +1,7 @@
 package com.taki.instagram.ui.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,18 +11,24 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.taki.instagram.R
 import com.taki.instagram.data.models.User
 import kotlinx.android.synthetic.main.post_item.view.*
 import kotlinx.android.synthetic.main.user_item.view.titleTV
+import javax.inject.Inject
 
 open class PostAdapter(
     private val userList: MutableList<User> = mutableListOf(),
     private val listener: OnPostClickListener
 ) : RecyclerView.Adapter<PostAdapter.PostVH>(), Filterable {
-    var mContext: Context? = null
 
     private var userListFull: List<User> = ArrayList(userList)
+    private var mContext: Context? = null
+
+
+    @Inject
+    lateinit var requestManager : RequestManager
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostVH {
         val itemView = LayoutInflater.from(parent.context).inflate(
@@ -34,25 +41,27 @@ open class PostAdapter(
     }
 
     override fun onBindViewHolder(holder: PostVH, position: Int) {
-        val currentItem = userList.get(position)
+        val currentItem = userList[position]
 
-        mContext?.let {
-            Glide.with(it)
-                .load(currentItem.profileImage?.medium)
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.ic_close)
-                .into(holder.image)
+        try {
+            //requestManager.load(currentItem.profileImage?.medium).into(holder.image)
+            mContext?.let {
+                Glide.with(it)
+                    .load(currentItem.profileImage?.medium)
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.ic_close)
+                    .into(holder.image)
+            }
+            holder.title.text = currentItem.username
+            holder.date.text = currentItem.updatedAt
+        } catch (e: Exception) {
+            Log.e("PostAdapter", "bind:!!!! ${e.message} " )
         }
-
-
-        holder.title.setText(currentItem.username)
-        holder.date.setText(currentItem.updatedAt)
     }
 
     override fun getItemCount(): Int = userList.size
 
     override fun getFilter(): Filter = postsFiltered
-
 
     private val postsFiltered = object : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -72,15 +81,12 @@ open class PostAdapter(
             return results
         }
 
-
         override fun publishResults(constraint: CharSequence?, filterResults: FilterResults?) {
             userList.clear()
             userList.addAll(filterResults?.values as MutableList<User>)
             notifyDataSetChanged()
         }
-
     }
-
 
     inner class PostVH(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val image: ImageView = itemView.images

@@ -2,9 +2,9 @@ package com.taki.instagram.utils
 
 import kotlinx.coroutines.flow.*
 
-/* we want to implement the offline cache; we will something we call NetworkBoundResource for that
-its a class or function  depending the implementation and its basically coordinates this hole caching process it display the cachedata from db
-than it decides if its the time to update the cache if yes than it fetch data from rest api and save it into the sqllite db
+/* we want to implement the offline cache; we will do something we call NetworkBoundResource for that
+its a class or function  depending the implementation and its basically coordinates this hole caching process ;it display the cacheData from db
+than it decides if its the time to update the cache if yes than it fetch data from rest api and save it into the sqlLite db
 and if not will display the cache later*/
 
 /*NetworkBoundResource:  the way it works => we have to pass function arguments to this NetworkBoundResource
@@ -32,13 +32,13 @@ inline fun <ResultType, RequestType> networkBoundResource(
         emit(Resource.Loading(data))
 
         try {
-            //then it will go ahead make the network request save the result of the network request into sqllite database
+            //then it will go ahead make the network request save the result of the network request into sqlLite database
             saveFetchResult(fetch())
-            //then emit directly from this sqllite db as a single source of truth
+            //then emit directly from this sqlLite db as a single source of truth
             query().map { Resource.Success(it) }
         } catch (throwable: Throwable) {
             //if anything goes wrong in the network request it will still emit the same data from the db
-            //but it will wrap it into resource error so we know we are looking at the old cache data because somthing went wrong
+            //but it will wrap it into resource error so we know we are looking at the old cache data because something went wrong
                 //when we try to update it
             query().map { Resource.Error(throwable, it) }
         }

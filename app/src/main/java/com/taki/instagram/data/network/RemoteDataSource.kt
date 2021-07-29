@@ -1,5 +1,6 @@
 package com.taki.instagram.data.network
 
+import com.facebook.stetho.Stetho
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -16,28 +17,26 @@ class RemoteDataSource @Inject constructor() {
 
     fun <Api> buildApi(
         api: Class<Api>
-    ): Api {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(getRetrofitClient())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(api)
-    }
+    ): Api = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .client(getRetrofitClient())
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(api)
 
-    private fun getRetrofitClient(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor { chain ->
-                chain.proceed(chain.request().newBuilder().also {
-                    it.addHeader("Accept", "application/json")
-                    //it.addHeader("Accept-version: v1", "Authorization: Client-ID $Client_ID")
-                }.build())
-            }.also { client ->
-                if (com.taki.instagram.BuildConfig.DEBUG) {
-                    val logging = HttpLoggingInterceptor()
-                    logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-                    client.addInterceptor(logging)
-                }
-            }.build()
-    }
+    private fun getRetrofitClient(): OkHttpClient = OkHttpClient.Builder()
+        //.addNetworkInterceptor(Stetho)
+        .addInterceptor { chain ->
+            chain.proceed(chain.request().newBuilder().also {
+                it.addHeader("Accept", "application/json")
+                //it.addHeader("Accept-version: v1", "Authorization: Client-ID $Client_ID")
+            }.build())
+        }.also { client ->
+            if (com.taki.instagram.BuildConfig.DEBUG) {
+                val logging = HttpLoggingInterceptor()
+                logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+                client.addInterceptor(logging)
+            }
+        }.build()
+
 }

@@ -5,10 +5,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.taki.instagram.data.models.Photo
-import com.taki.instagram.data.models.User
 import kotlinx.coroutines.flow.Flow
 
-//Dao its an interface where we need to declare methods for all differant db operations we wat tp ake on db CRUD
+//Dao its an interface where we need to declare methods for all different db operations we wat tp ake on db CRUD
 @Dao
 interface UserDao {
 

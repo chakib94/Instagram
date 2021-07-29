@@ -13,7 +13,7 @@ With Hilt it actually make that for us*/
 /*the reason that we have @inject in constructor in viewmodel and not in activities/fragments its because the android system is
 responsible for instantiating activities whenever call an activity constructor also we cant pass any argument to it*/
 
-//Thanks to @HiltViewModel annotation dagger hilt will write this viewmodel factory behind the scenes for us
+//Thanks to @HiltViewModel annotation dagger hilt will write this viewModel factory behind the scenes for us
 @HiltViewModel
 class UserViewModel @Inject constructor(
     repository: UserRepository
@@ -21,12 +21,11 @@ class UserViewModel @Inject constructor(
 /*    private val usersLiveData = MutableLiveData<List<Photo>>()
     val users: LiveData<List<Photo>> = usersLiveData*/
 
-    //return flow that we get back into livedata
-    //Flow is more flexible than livedata but livedata is easier to use between the viewmodel and ui layer
-    //by turning this flow into livedata we dont have to lunch a coroutine anymore to collect it this is already handled
-    //for us and we also dont have to handle the lifecycle manually this is also done by livedata internally
+    //return flow that we get back into liveData
+    //Flow is more flexible than liveData but liveData is easier to use between the viewModel and ui layer
+    //by turning this flow into liveData we d'ont have to lunch a coroutine anymore to collect it this is already handled
+    //for us and we also don't have to handle the lifecycle manually this is also done by liveData internally
     val users = repository.getUsers().asLiveData()
-
 
 /*    init {
         viewModelScope.launch {
