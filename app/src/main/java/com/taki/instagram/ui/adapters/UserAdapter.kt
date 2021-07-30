@@ -20,7 +20,7 @@ because when something in room changes we get a completely new list of task thro
 db doesn't says hey this item was deleted or this one is changed we always get a completely new list and ListAdapter can handle this properly
 because it calculates the diff between the old and the new list and automatically dispatch the old changes and the correct animations
 and importantly it does all this in the bg thread again to avoid that we  have a starter in new interface*/
-class UserAdapter() :
+class UserAdapter(private val listener: OnUserClickListener) :
     ListAdapter<User, UserAdapter.UserViewHolder>(UserComparator()) {
     //ListAdapter we can just pass a completely new list and it calculate the changes between the old and the new list but of course the adapter
     //doesnt know this automatically we have to tell it how it can detect changes between items.
@@ -62,15 +62,18 @@ class UserAdapter() :
                 }
 
                 root.setOnClickListener {
-                    val position = adapterPosition
                     //NO_POSITION: when we delete an item it gets animated from the list and theoritically it is possible to click this item
                     //while is still animating but not valid anymore
                     if (position != RecyclerView.NO_POSITION) {
-                        val image = getItem(position).profileImage!!.large
-                        val action = HomeFragmentDirections.actionHomeFragmentToDetailFullScreenFragment(image)
-                        Navigation.findNavController(it).navigate(action)
-                        //currentList.removeAt(position)
-                        //bindingAdapter?.notifyItemRemoved(position)
+                        listener.onUserClick(getItem(position),position)
+
+                /*          val image = getItem(position).profileImage!!.large
+                          val action = HomeFragmentDirections.actionHomeFragmentToDetailFullScreenFragment(image)
+                          Navigation.findNavController(it).navigate(action)*/
+                     /*   currentList.removeAt(position)
+                        bindingAdapter?.notifyItemRemoved(position)
+                        notifyItemRangeChanged(position, currentList.size);*/
+
                     }
                 }
             }
@@ -92,6 +95,11 @@ class UserAdapter() :
         //this means whenever an attribute of Task has changed => this callback areContentsTheSame will know these items are the same anymore
             //and it has to update them on the screen
             oldItem == newItem
+    }
+
+
+    interface OnUserClickListener {
+        fun onUserClick(user: User, position : Int)
     }
 
 }

@@ -65,10 +65,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.taki.instagram.utils.GridRecyclerView
             android:id="@+id/posts_rv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="20dp"
             android:orientation="vertical"
             android:overScrollMode="never"

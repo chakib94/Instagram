@@ -108,4 +108,6 @@ open class PostAdapter(
         fun onPostClick(user: User)
     }
 
+
+
 }
