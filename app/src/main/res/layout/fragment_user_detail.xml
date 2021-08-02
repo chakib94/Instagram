@@ -8,12 +8,12 @@
         android:layout_height="match_parent"
         tools:context=".ui.fragments.UserDetailFragment">
 
-     <!--   <data>
+        <!--   <data>
 
-            <variable
-                name="user"
-                type="com.taki.instagram.data.models.User" />
-        </data>-->
+               <variable
+                   name="user"
+                   type="com.taki.instagram.data.models.User" />
+           </data>-->
 
         <ImageView
             android:id="@+id/image_view"
@@ -22,6 +22,7 @@
             android:adjustViewBounds="true"
             android:background="@drawable/couverture_img"
             android:scaleType="centerCrop"
+            app:layout_collapseMode="parallax"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

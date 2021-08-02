@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Instagram</string>
 
+    <!-- animations -->
+    <string name="image_transition_name">ImageTransition</string>
+    <string name="text_transition_name">TextTransition</string>
+    <!-- animations -->
+
+
     <string name="ok">OK</string>
     <!-- UserFragment -->
     <string name="user_name">User name</string>
@@ -12,4 +18,5 @@
     <string name="created_at">Created at :</string>
     <string name="hint"><font size="10">Long description!</font></string>
     <!-- UserDetailFragment -->
+
 </resources>

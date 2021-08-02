@@ -3,16 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="10dp"
+    android:layout_marginHorizontal="5dp"
     android:orientation="vertical">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
-        android:layout_margin="5dp"
+        android:layout_marginVertical="5dp"
         android:adjustViewBounds="true"
         android:padding="5dp"
+        android:transitionName="cover_picture"
         android:scaleType="fitXY"
         android:src="@drawable/placeholder"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
