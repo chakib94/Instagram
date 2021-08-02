@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.taki.instagram.R
+import com.taki.instagram.data.models.Photo
 import com.taki.instagram.data.models.User
 import com.taki.instagram.databinding.FragmentHomeBinding
 import com.taki.instagram.ui.adapters.PostAdapter
@@ -61,10 +62,10 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
             viewModel.users.observe(viewLifecycleOwner) { result ->
                 if (!result.data.isNullOrEmpty()) {
-                    result.data!!.forEach {
+                    result.data.forEach {
                         userList.add(it.user)
                     }
-                    initPostsRV(userList)
+                    initPostsRV(result.data as ArrayList<Photo>)
                     //whenever in the db changes we receive it in here
                     //submitList method of ListAdapter and after we have passed the new list here DiffUtil takes care of the rest of calculating the changes
                     //of the old list and dispatching the appropriate update events and animations
@@ -81,14 +82,12 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         }
     }
 
-    private fun initPostsRV(photoList: MutableList<User>) {
+    private fun initPostsRV(photoList: MutableList<Photo>) {
         val postAdapter = PostAdapter(photoList, this)
         posts_rv.adapter = postAdapter
         posts_rv.layoutManager = GridLayoutManager(activity, 2)
         posts_rv.setHasFixedSize(true)
         posts_rv.layoutAnimation = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.grid_layout_animation_from_bottom)
-        //posts_rv.adapter?.notifyDataSetChanged()
-       // posts_rv.scheduleLayoutAnimation()
 
         homeFragmentBinding!!.searchBar.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
@@ -106,22 +105,21 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         })
     }
 
-
-    override fun onPostClick(user: User) {
-        val action = HomeFragmentDirections.actionHomeFragmentToUserDetailFragment(user)
+    override fun onPostClick(user: User, photo: Photo) {
+        val action = HomeFragmentDirections.actionHomeFragmentToUserDetailFragment(user,photo)
         findNavController().navigate(action)
     }
 
     override fun onUserClick(user: User, position: Int) {
-        val action = HomeFragmentDirections.actionHomeFragmentToDetailFullScreenFragment(user.profileImage!!.large)
+/*        val action = HomeFragmentDirections.actionHomeFragmentToDetailFullScreenFragment(user.profileImage!!.large.toString())
         findNavController().navigate(action)
         userList.removeAt(position)
-        userAdapter.notifyItemRemoved(position)
+        userAdapter.notifyItemRemoved(position)*/
     }
 
     override fun onDestroyView() {
-// Consider not storing the binding instance in a field
-// if not needed.
+        // Consider not storing the binding instance in a field
+        // if not needed.
         homeFragmentBinding = null
         super.onDestroyView()
     }

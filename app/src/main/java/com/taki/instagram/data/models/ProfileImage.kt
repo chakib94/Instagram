@@ -8,13 +8,12 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class ProfileImage(
 
-    @SerializedName("small")
-    val small: String,
-
     @SerializedName("medium")
-    val medium: String,
+    val medium: String? = null,
 
     @SerializedName("large")
-    val large: String
+    val large: String? = null,
+
+    var isSelected: Boolean ? = false
 
 ) : Parcelable

@@ -13,19 +13,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.taki.instagram.R
+import com.taki.instagram.data.models.Photo
 import com.taki.instagram.data.models.User
 import kotlinx.android.synthetic.main.post_item.view.*
 import kotlinx.android.synthetic.main.user_item.view.titleTV
 import javax.inject.Inject
 
 open class PostAdapter(
-    private val userList: MutableList<User> = mutableListOf(),
+    private val photoList: MutableList<Photo> = mutableListOf(),
     private val listener: OnPostClickListener
 ) : RecyclerView.Adapter<PostAdapter.PostVH>(), Filterable {
 
-    private var userListFull: List<User> = ArrayList(userList)
+    private var photoListFull: List<Photo> = ArrayList(photoList)
     private var mContext: Context? = null
-
 
     @Inject
     lateinit var requestManager : RequestManager
@@ -41,38 +41,39 @@ open class PostAdapter(
     }
 
     override fun onBindViewHolder(holder: PostVH, position: Int) {
-        val currentItem = userList[position]
+        val currentPhotoItem = photoList[position]
 
         try {
-            //requestManager.load(currentItem.profileImage?.medium).into(holder.image)
+            //requestManager.load(currentUserItem.profileImage?.medium).into(holder.image)
             mContext?.let {
                 Glide.with(it)
-                    .load(currentItem.profileImage?.medium)
+                    .load(currentPhotoItem.urls.regular)
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.ic_close)
                     .into(holder.image)
             }
-            holder.title.text = currentItem.username
-            holder.date.text = currentItem.updatedAt
+            holder.title.text = currentPhotoItem.altDescription
+            holder.date.text = currentPhotoItem.createdDateFormatted
+            holder.username.text = currentPhotoItem.user.firstName
         } catch (e: Exception) {
             Log.e("PostAdapter", "bind:!!!! ${e.message} " )
         }
     }
 
-    override fun getItemCount(): Int = userList.size
+    override fun getItemCount(): Int = photoList.size
 
-    override fun getFilter(): Filter = postsFiltered
+    override fun getFilter(): Filter = photosFiltered
 
-    private val postsFiltered = object : Filter() {
+    private val photosFiltered = object : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            val filteredList = mutableListOf<User>()
+            val filteredList = mutableListOf<Photo>()
             if (constraint == null || constraint.isEmpty()) {
-                filteredList.addAll(userListFull)
+                filteredList.addAll(photoListFull)
             } else {
                 val filterPattern = constraint.toString().toLowerCase().trim()
-                for (post in userListFull) {
-                    if (post.username!!.toLowerCase().contains(filterPattern)) {
-                        filteredList.add(post)
+                for (photo in photoListFull) {
+                    if (photo.altDescription!!.toLowerCase().contains(filterPattern)) {
+                        filteredList.add(photo)
                     }
                 }
             }
@@ -82,15 +83,16 @@ open class PostAdapter(
         }
 
         override fun publishResults(constraint: CharSequence?, filterResults: FilterResults?) {
-            userList.clear()
-            userList.addAll(filterResults?.values as MutableList<User>)
+            photoList.clear()
+            photoList.addAll(filterResults?.values as MutableList<Photo>)
             notifyDataSetChanged()
         }
     }
 
     inner class PostVH(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        val image: ImageView = itemView.images
+        val image: ImageView = itemView.image
         val title: TextView = itemView.titleTV
+        val username: TextView = itemView.user_name_tv
         val date: TextView = itemView.dateTV
 
         init {
@@ -100,14 +102,12 @@ open class PostAdapter(
         override fun onClick(v: View?) {
             val position = absoluteAdapterPosition
             if (position != RecyclerView.NO_POSITION)
-                listener.onPostClick(userList.get(position))
+                listener.onPostClick(photoList[position].user, photoList[position])
         }
     }
 
     interface OnPostClickListener {
-        fun onPostClick(user: User)
+        fun onPostClick(user: User, photo: Photo)
     }
-
-
 
 }

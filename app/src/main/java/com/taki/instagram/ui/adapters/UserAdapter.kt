@@ -1,5 +1,6 @@
 package com.taki.instagram.ui.adapters
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,9 +11,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
+import com.taki.instagram.R
 import com.taki.instagram.databinding.UserItemBinding
 import com.taki.instagram.data.models.User
 import com.taki.instagram.ui.fragments.HomeFragmentDirections
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import javax.inject.Inject
 
 /*ListAdapter is a subclass of a rv adapter we use it whenever we have a reactive dataSource, when we have a completely new list passed to you
@@ -52,11 +55,19 @@ class UserAdapter(private val listener: OnUserClickListener) :
             //we define what data is this task object we want to put into which use of our item user layout
             binding.apply {
                 try {
-                    //requestManager.load(user.profileImage?.large).into(img)
-                    Glide.with(itemView)
-                        .load(user.profileImage?.large)
-                        .into(img)
                     titleTV.text = user.firstName
+
+                    if (user.profileImage!!.isSelected == false)
+                        img.setStrokeColorResource(R.color.Christi)
+                    else
+                        img.setStrokeColorResource(R.color.dark_gray)
+
+                    Glide.with(itemView)
+                        .load(user.profileImage.large)
+                        .into(img)
+
+                    //requestManager.load(user.profileImage?.large).into(img)
+
                 } catch (e: Exception) {
                     Log.e("UserAdapter", "bind:!!!! ${e.message} ")
                 }
@@ -65,15 +76,11 @@ class UserAdapter(private val listener: OnUserClickListener) :
                     //NO_POSITION: when we delete an item it gets animated from the list and theoritically it is possible to click this item
                     //while is still animating but not valid anymore
                     if (position != RecyclerView.NO_POSITION) {
-                        listener.onUserClick(getItem(position),position)
-
-                /*          val image = getItem(position).profileImage!!.large
-                          val action = HomeFragmentDirections.actionHomeFragmentToDetailFullScreenFragment(image)
-                          Navigation.findNavController(it).navigate(action)*/
-                     /*   currentList.removeAt(position)
-                        bindingAdapter?.notifyItemRemoved(position)
-                        notifyItemRangeChanged(position, currentList.size);*/
-
+                       // listener.onUserClick(getItem(position),position)
+                          getItem(position).profileImage?.isSelected = true
+                          img.setStrokeColorResource(R.color.dark_gray)
+                          val action = HomeFragmentDirections.actionHomeFragmentToDetailFullScreenFragment(user.profileImage!!.large.toString())
+                          Navigation.findNavController(it).navigate(action)
                     }
                 }
             }

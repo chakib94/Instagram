@@ -34,6 +34,9 @@
         <argument
             android:name="user"
             app:argType="com.taki.instagram.data.models.User" />
+        <argument
+            android:name="photo"
+            app:argType="com.taki.instagram.data.models.Photo" />
     </fragment>
     <fragment
         android:id="@+id/detailFullScreenFragment"

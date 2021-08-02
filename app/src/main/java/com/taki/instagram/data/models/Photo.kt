@@ -2,21 +2,26 @@ package com.taki.instagram.data.models
 
 
 import android.os.Parcelable
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.Embedded
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 @Entity(tableName = "photo")
 @Parcelize
 data class Photo(
     @PrimaryKey
     @SerializedName("id")
-    val id: String ,
+    val id: String,
 
     @SerializedName("created_at")
     val createdAt: String,
+
+    @SerializedName("updated_at")
+    val updatedAt: String,
 
     @SerializedName("promoted_at")
     val promotedAt: String,
@@ -53,6 +58,16 @@ data class Photo(
     val views: Int,
 
     @SerializedName("downloads")
-    val downloads: Int
+    val downloads: Int,
 
-) : Parcelable
+    @SerializedName("urls")
+    @Embedded
+    val urls: Urls,
+
+    ) : Parcelable {
+    val createdDateFormatted: String
+        get() = createdAt.substring(0,10)
+
+    val updatedDateFormatted: String
+        get() = updatedAt.substring(0,10)
+}

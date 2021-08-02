@@ -8,7 +8,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 //@AndroidEntryPoint   tells dagger Hilt to inject this activity/fragment with its dependencies
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class
+MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
